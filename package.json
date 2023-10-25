@@ -1,0 +1,35 @@
+{
+  "name": "ts-pay-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/bot.js",
+  "scripts": {
+    "start": "npm run build && node dist/bot",
+    "dev": "npx nodemon",
+    "build": "rimraf ./dist && npx tsc"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@esindger/telegraf-i18n": "^0.5.5",
+    "@prisma/client": "^5.4.2",
+    "dotenv": "^16.3.1",
+    "pino": "^8.16.0",
+    "telegraf": "^4.14.0",
+    "telegraf-session-local": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.6",
+    "nodemon": "^3.0.1",
+    "pino-pretty": "^10.2.3",
+    "prettier": "^3.0.3",
+    "prisma": "^5.4.2",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,0 +1,58 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Users {
+    id        BigInt    @unique
+    role      UserRoles @default(USER)
+    balance   Float     @default(0)
+    refferal  String?
+    createdAt DateTime  @default(now()) @map("created_at")
+
+    @@map("users")
+}
+
+model Wallets {
+    id     Int          @id @default(autoincrement())
+    addres String       @unique
+    status WalletStatus @default(FREE)
+
+    @@map("wallets")
+}
+
+model Deposits {
+    id         Int           @id @default(autoincrement())
+    userId     Int           @map("user_id")
+    walletId   Int           @map("wallet_id")
+    txid       String?
+    amount     Float
+    paidAmount Float?        @map("paid_amount")
+    createdAt  DateTime      @default(now()) @map("created_at")
+    paidAt     DateTime?     @map("paid_at")
+    expiredAt  DateTime      @map("expired_at")
+    status     DepositStatus @default(INPROGRESS)
+
+    @@map("deposits")
+}
+
+enum DepositStatus {
+    INPROGRESS
+    PAID
+    EXPIRED
+    CANCELLED
+}
+
+enum WalletStatus {
+    FREE
+    RESERVED
+}
+
+enum UserRoles {
+    USER
+    ADMIN
+}
