@@ -1,5 +1,7 @@
 /dist
 /node_modules
+/logs
+*.log
 sessions.json
 .vscode
 .env

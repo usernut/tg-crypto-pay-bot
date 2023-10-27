@@ -1,23 +1,16 @@
-import pinoLogger, { Logger } from 'pino'
+import { Logger } from 'pino'
 import { IContext } from '../common'
-import { ILoggerService } from './logger.interface'
-// TODO: смена места сохранения логов для production # process.env.NODE_ENV === 'production'
-// Перегрузки
+import { loggerFactory } from './logger.factory'
+import { ILoggerFactory, ILoggerService } from './logger.interface'
+// TODO: Перегрузки
 class PinoLoggerService implements ILoggerService {
 	private readonly pino: Logger
 
-	constructor() {
-		this.pino = pinoLogger({
-			formatters: {
-				level: label => {
-					return { level: label.toUpperCase() }
-				}
-			},
-			timestamp: pinoLogger.stdTimeFunctions.isoTime,
-			transport: {
-				target: 'pino-pretty'
-			}
-		})
+	constructor(private readonly loggerFactory: ILoggerFactory) {
+		this.pino =
+			process.env.NODE_ENV === 'production'
+				? this.loggerFactory.createProduction()
+				: this.loggerFactory.createDevelopment()
 	}
 
 	private getRequestData = (ctx: IContext) => {
@@ -43,4 +36,4 @@ class PinoLoggerService implements ILoggerService {
 	}
 }
 
-export const logger = new PinoLoggerService()
+export const logger = new PinoLoggerService(loggerFactory)
