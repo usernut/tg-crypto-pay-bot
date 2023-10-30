@@ -1,17 +1,21 @@
-import { ACTION } from '../actions'
-import { Action } from '../actions/action.interface'
+import { ACTION, IAction } from '../actions'
 import { userProfileAction } from '../actions/user-profile.action'
 import { IContext, returnToUserMenuKeyboard } from '../common'
 import { ILoggerService, logger } from '../logger'
 import { SCENE } from '../scenes'
 import { NoFreeWalletsError } from '../wallet'
 import { depositRepository } from './deposit.repository'
-import { CreatedDepositInfo } from './interfaces'
+import {
+	CreatedDepositInfo,
+	IDepositRepository,
+	IDepositService
+} from './interfaces'
 
-class DepositService {
+class DepositService implements IDepositService {
 	constructor(
 		private readonly logger: ILoggerService,
-		private readonly userProfileAction: Action
+		private readonly userProfileAction: IAction,
+		private readonly depositRepository: IDepositRepository
 	) {}
 
 	async create(
@@ -19,7 +23,21 @@ class DepositService {
 		amount: number
 	): Promise<CreatedDepositInfo | null> {
 		try {
-			const deposit = await depositRepository.create(ctx.chat.id, +amount)
+			const deposit = await this.depositRepository.create(ctx.chat.id, +amount)
+
+			this.logger.log(
+				`Пользователь ${ctx.chat.id} создал платеж на сумму ${amount} USDT`,
+				{ userId: ctx.chat.id, scene: SCENE.USER.DEPOSIT, step: 2 }
+			)
+
+			await ctx.reply(
+				ctx.i18n.t('user.deposit_scene.created', {
+					amount,
+					wallet: deposit.wallet,
+					expiresIn: deposit.expiresIn
+				}),
+				returnToUserMenuKeyboard()
+			)
 
 			return deposit
 		} catch (error) {
@@ -54,6 +72,8 @@ class DepositService {
 	}
 
 	async cancel(ctx: IContext): Promise<void> {
+		await ctx.scene.leave()
+
 		this.logger.log(
 			`Пользователь ${ctx.chat.id} отменил платеж на стадии ввода суммы платежа`,
 			{
@@ -64,10 +84,12 @@ class DepositService {
 			}
 		)
 
-		await ctx.scene.leave()
-
 		this.userProfileAction.handler(ctx)
 	}
 }
 
-export const depositService = new DepositService(logger, userProfileAction)
+export const depositService = new DepositService(
+	logger,
+	userProfileAction,
+	depositRepository
+)

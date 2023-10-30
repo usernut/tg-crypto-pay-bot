@@ -1,4 +1,4 @@
-import { DepositStatus, Prisma, WalletStatus } from '@prisma/client'
+import { DepositStatus, Deposits, Prisma, WalletStatus } from '@prisma/client'
 import { Transaction } from '../common/types'
 import { IPrismaService, prismaService } from '../database'
 import { IUserRepository, userRepository } from '../user'
@@ -17,9 +17,9 @@ class DepositRepository implements IDepositRepository {
 	) {}
 
 	async create(
-		userId: number,
+		userId: number | bigint,
 		amount: number,
-		expiredIn: number = 15
+		expiresIn: number = 15
 	): Promise<CreatedDepositInfo> {
 		return this.prismaService.$transaction(
 			async tx => {
@@ -27,7 +27,7 @@ class DepositRepository implements IDepositRepository {
 					await this.walletRepository.reserveFreeWithTransaction(tx)
 
 				const expiredAt = new Date()
-				expiredAt.setMinutes(expiredAt.getMinutes() + expiredIn)
+				expiredAt.setMinutes(expiredAt.getMinutes() + expiresIn)
 
 				const deposit = await tx.deposits.create({
 					data: {
@@ -42,7 +42,7 @@ class DepositRepository implements IDepositRepository {
 					id: deposit.id,
 					userId,
 					amount,
-					expiredIn,
+					expiresIn,
 					wallet: wallet.addres
 				}
 			},

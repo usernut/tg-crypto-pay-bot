@@ -1,11 +1,11 @@
-import { DepositStatus } from '@prisma/client'
+import { DepositStatus, Deposits } from '@prisma/client'
 import { CreatedDepositInfo } from './create-deposit-into.interface'
 
 export interface IDepositRepository {
 	create(
-		userId: number,
+		userId: number | bigint,
 		amount: number,
-		expiredIn: number
+		expiresIn?: number
 	): Promise<CreatedDepositInfo>
 
 	confirm(depositId: number, txid: string, paidAmount: number): Promise<void>
