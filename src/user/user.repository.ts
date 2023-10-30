@@ -6,13 +6,13 @@ import { IUserRepository } from './interfaces'
 class UserRepository implements IUserRepository {
 	constructor(private readonly prismaService: IPrismaService) {}
 
-	get(id: number): Promise<Users> {
+	get(id: number | bigint): Promise<Users> {
 		return this.prismaService.users.findUnique({
 			where: { id }
 		})
 	}
 
-	async getOrCreate(id: number, refferal?: string | null): Promise<Users> {
+	async getOrCreate(id: number | bigint, refferal?: string | null): Promise<Users> {
 		const user = await this.get(id)
 
 		if (user) {
@@ -26,7 +26,7 @@ class UserRepository implements IUserRepository {
 
 	incementBalanceByIdWithTransaction(
 		tx: Transaction,
-		userId: number,
+		userId: number | bigint,
 		amount: number
 	): Promise<Users> {
 		return tx.users.update({

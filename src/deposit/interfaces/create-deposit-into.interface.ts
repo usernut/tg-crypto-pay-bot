@@ -1,7 +1,7 @@
 export interface CreatedDepositInfo {
 	id: number
-	userId: number
+	userId: number | bigint
 	amount: number
-	expiredIn: number
+	expiresIn: number
 	wallet: string
 }

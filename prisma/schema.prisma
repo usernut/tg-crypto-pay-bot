@@ -27,7 +27,7 @@ model Wallets {
 
 model Deposits {
     id         Int           @id @default(autoincrement())
-    userId     Int           @map("user_id")
+    userId     BigInt        @map("user_id")
     walletId   Int           @map("wallet_id")
     txid       String?
     amount     Float
