@@ -1,7 +1,7 @@
 import pino, { Logger, levels, stdTimeFunctions } from 'pino'
 import { ILoggerFactory } from './logger.interface'
 
-class LoggerFactory implements ILoggerFactory {
+class PinoFactory implements ILoggerFactory {
 	createProduction(): Logger {
 		return pino({
 			sync: false,
@@ -45,4 +45,4 @@ class LoggerFactory implements ILoggerFactory {
 	}
 }
 
-export const loggerFactory = new LoggerFactory()
+export const pinoFactory = new PinoFactory()

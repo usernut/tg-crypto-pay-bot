@@ -1,16 +1,16 @@
 import { Logger } from 'pino'
 import { IContext } from '../common'
-import { loggerFactory } from './logger.factory'
 import { ILoggerFactory, ILoggerService } from './logger.interface'
+import { pinoFactory } from './pino.factory'
 // TODO: Перегрузки
 class PinoLoggerService implements ILoggerService {
 	private readonly pino: Logger
 
-	constructor(private readonly loggerFactory: ILoggerFactory) {
+	constructor(private readonly pinoFactory: ILoggerFactory) {
 		this.pino =
 			process.env.NODE_ENV === 'production'
-				? this.loggerFactory.createProduction()
-				: this.loggerFactory.createDevelopment()
+				? this.pinoFactory.createProduction()
+				: this.pinoFactory.createDevelopment()
 	}
 
 	private getRequestData = (ctx: IContext) => {
@@ -36,4 +36,4 @@ class PinoLoggerService implements ILoggerService {
 	}
 }
 
-export const logger = new PinoLoggerService(loggerFactory)
+export const logger = new PinoLoggerService(pinoFactory)
