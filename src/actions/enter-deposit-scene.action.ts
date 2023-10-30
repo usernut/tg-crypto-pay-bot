@@ -2,9 +2,9 @@ import { IContext } from '../common'
 import { ILoggerService, logger } from '../logger'
 import { SCENE } from '../scenes'
 import { ACTION } from './action.constants'
-import { Action } from './action.interface'
+import { IAction } from './action.interface'
 
-class EnterDepositSceneAction implements Action {
+class EnterDepositSceneAction implements IAction {
 	constructor(private readonly logger: ILoggerService) {}
 
 	handler = async (ctx: IContext): Promise<void> => {

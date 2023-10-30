@@ -7,6 +7,7 @@ import { userProfileAction } from './user-profile.action'
 import { userSupportAction } from './user-support.action'
 
 export * from './action.constants'
+export * from './action.interface'
 
 export const initActions = (bot: Telegraf<IContext>) => {
 	bot.action(ACTION.USER.SUPPORT, userSupportAction.handler)

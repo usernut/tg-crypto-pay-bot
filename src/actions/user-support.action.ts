@@ -1,9 +1,9 @@
 import { IContext, comeBackKeyboard } from '../common'
 import { ILoggerService, logger } from '../logger'
 import { ACTION } from './action.constants'
-import { Action } from './action.interface'
+import { IAction } from './action.interface'
 
-class UserSupportAction implements Action {
+class UserSupportAction implements IAction {
 	constructor(private readonly logger: ILoggerService) {}
 
 	handler = async (ctx: IContext): Promise<void> => {

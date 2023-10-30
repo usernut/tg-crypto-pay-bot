@@ -1,9 +1,9 @@
 import { IContext, userMenuKeyboard } from '../common'
 import { ILoggerService, logger } from '../logger'
 import { ACTION } from './action.constants'
-import { Action } from './action.interface'
+import { IAction } from './action.interface'
 
-class UserMenuAction implements Action {
+class UserMenuAction implements IAction {
 	constructor(private readonly logger: ILoggerService) {}
 
 	handler = async (ctx: IContext): Promise<void> => {

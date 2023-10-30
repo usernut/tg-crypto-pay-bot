@@ -2,9 +2,9 @@ import { IContext, userProfileKeyboard } from '../common'
 import { ILoggerService, logger } from '../logger'
 import { IUserRepository, userRepository } from '../user'
 import { ACTION } from './action.constants'
-import { Action } from './action.interface'
+import { IAction } from './action.interface'
 
-class UserProfileAction implements Action {
+class UserProfileAction implements IAction {
 	constructor(
 		private readonly logger: ILoggerService,
 		private readonly userRepository: IUserRepository
