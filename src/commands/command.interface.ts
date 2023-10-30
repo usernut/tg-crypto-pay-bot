@@ -1,5 +1,5 @@
 import { IContext } from '../common'
 
-export abstract class Command {
-	abstract handler(ctx: IContext, next: () => Promise<void>): Promise<void>
+export interface ICommand {
+	handler(ctx: IContext, next: () => Promise<void>): Promise<void>
 }

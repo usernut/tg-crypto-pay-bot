@@ -1,10 +1,10 @@
 import { Message } from 'telegraf/typings/core/types/typegram'
 import { IContext, userMenuKeyboard } from '../common'
 import { ILoggerService } from '../logger'
-import { logger } from './../logger/logger.service'
-import { Command } from './command.interface'
+import { logger } from '../logger/logger.service'
+import { ICommand } from './command.interface'
 
-class StartCommand implements Command {
+class StartCommand implements ICommand {
 	constructor(private readonly logger: ILoggerService) {}
 
 	handler = async (ctx: IContext): Promise<void> => {
