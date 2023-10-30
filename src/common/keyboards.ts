@@ -6,7 +6,7 @@ export const userProfileKeyboard = (): ExtraEditMessageText => {
 		parse_mode: 'Markdown',
 		reply_markup: {
 			inline_keyboard: [
-				[{ text: '➕ Пополнить', callback_data: ACTION.USER.DEPOSIT }],
+				[{ text: '➕ Пополнить', callback_data: ACTION.USER.ENTER_DEPOSIT }],
 				[
 					{
 						text: '🗳 История пополнений',

@@ -11,8 +11,8 @@ class EnterDepositSceneAction implements IAction {
 		try {
 			await ctx.scene.enter(SCENE.USER.DEPOSIT)
 		} catch (error) {
-			this.logger.error(`Ошибка при выполнении экшена ${ACTION.USER.DEPOSIT}`, {
-				action: ACTION.USER.DEPOSIT,
+			this.logger.error(`Ошибка при выполнении экшена ${ACTION.USER.ENTER_DEPOSIT}`, {
+				action: ACTION.USER.ENTER_DEPOSIT,
 				userId: ctx.chat.id,
 				error
 			})

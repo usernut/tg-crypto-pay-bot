@@ -4,7 +4,7 @@ export const ACTION = {
 		SUPPORT: 'user_support',
 		MENU: 'user_menu',
 		PROFILE: 'user_profile',
-		DEPOSIT: 'user_deposit',
+		ENTER_DEPOSIT: 'user_deposit',
 		DEPOSIT_HISTORY: 'user_deposit_history'
 	},
 	ADMIN: {
