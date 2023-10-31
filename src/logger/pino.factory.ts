@@ -1,5 +1,5 @@
 import pino, { Logger, levels, stdTimeFunctions } from 'pino'
-import { ILoggerFactory } from './logger.interface'
+import { ILoggerFactory } from './interfaces'
 
 class PinoFactory implements ILoggerFactory {
 	createProduction(): Logger {

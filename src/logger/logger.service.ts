@@ -1,6 +1,6 @@
 import { Logger } from 'pino'
 import { IContext } from '../common'
-import { ILoggerFactory, ILoggerService } from './logger.interface'
+import { ILoggerFactory, ILoggerService } from './interfaces'
 import { pinoFactory } from './pino.factory'
 // TODO: Перегрузки
 class PinoLoggerService implements ILoggerService {
